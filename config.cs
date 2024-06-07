@@ -27,7 +27,7 @@ namespace NewUpdateFixes
         /// If SCP500 cures the traumatised affect given by 106.
         /// </summary>
         [Description("If SCP500 cures the traumatised affect given by 106. - suggested by follow the owl")]
-        public bool Scp500CuresTrauma { get; set; } = true;
+        public bool Scp500CuresTrauma { get; set; } = false;
 
         /// <summary>
         /// revert scp207 back to its pre 13.5 speeds
@@ -45,12 +45,12 @@ namespace NewUpdateFixes
         /// "If pre 13.5 recipes to get cola should still work in 914 - UPGRADES DROPPED ITEMS
         /// </summary>
         [Description("adrenaline on very fine has a 33% chance to make 1853 - UPGRADES DROPPED ITEMS")]
-        public bool OldColaRecipes914Dropped { get; set; } = true;
+        public bool OldColaRecipes914Dropped { get; set; } = false;
 
         /// <summary>
         /// If pre 13.5 recipes to get cola should still work in 914 - UPGRADES ITEM ONLY IN HAND
         /// </summary>
         [Description("adrenaline on very fine has a 33% chance to make 1853 - UPGRADES ITEM ONLY IN HAND")]
-        public bool OldColaRecipes914Hand { get; set; } = true;
+        public bool OldColaRecipes914Hand { get; set; } = false;
     }
 }
