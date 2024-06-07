@@ -22,7 +22,7 @@ namespace NewUpdateFixes
         public override string Author => "Half";
 
         /// <inheritdoc>
-        public override Version Version => new Version(1, 0, 0);
+        public override Version Version => new Version(1, 0, 1);
 
         /// <inheritdoc>
         public override Version RequiredExiledVersion => new Version(8, 9, 2);
@@ -128,11 +128,11 @@ namespace NewUpdateFixes
             if (config.OldColaRecipes914Dropped)
             {
 
-                UpgradeItemFloor(ItemType.GrenadeFlash, ItemType.SCP207, Scp914.Scp914KnobSetting.VeryFine, 4, ev);
+                //UpgradeItemFloor(ItemType.GrenadeFlash, ItemType.SCP207, Scp914.Scp914KnobSetting.VeryFine, 4, ev);
 
                 UpgradeItemFloor(ItemType.Adrenaline, ItemType.SCP1853, Scp914.Scp914KnobSetting.VeryFine, 3, ev);
 
-                UpgradeItemFloor(ItemType.SCP1853, ItemType.SCP207, Scp914.Scp914KnobSetting.Fine, 1, ev);
+                //UpgradeItemFloor(ItemType.SCP1853, ItemType.SCP207, Scp914.Scp914KnobSetting.Fine, 1, ev);
 
             }
 
@@ -154,11 +154,11 @@ namespace NewUpdateFixes
 
             if (config.OldColaRecipes914Hand)
             {
-                UpgradeItemHand(ItemType.GrenadeFlash, ItemType.SCP207, Scp914.Scp914KnobSetting.VeryFine, 4, ev);
+                //UpgradeItemHand(ItemType.GrenadeFlash, ItemType.SCP207, Scp914.Scp914KnobSetting.VeryFine, 4, ev);
 
                 UpgradeItemHand(ItemType.Adrenaline, ItemType.SCP1853, Scp914.Scp914KnobSetting.VeryFine, 3, ev);
 
-                UpgradeItemHand(ItemType.SCP1853, ItemType.SCP207, Scp914.Scp914KnobSetting.Fine, 1, ev);
+                //UpgradeItemHand(ItemType.SCP1853, ItemType.SCP207, Scp914.Scp914KnobSetting.Fine, 1, ev);
 
 
             }
@@ -175,7 +175,6 @@ namespace NewUpdateFixes
             {
                 if (ev.Item.Type == ItemType.SCP207)
                 {
-
                     
                     if (intensity == 0)
                     {

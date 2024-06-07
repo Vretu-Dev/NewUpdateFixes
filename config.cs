@@ -44,13 +44,13 @@ namespace NewUpdateFixes
         /// <summary>
         /// "If pre 13.5 recipes to get cola should still work in 914 - UPGRADES DROPPED ITEMS
         /// </summary>
-        [Description("If pre 13.5 recipes to get cola should still work in 914 - UPGRADES DROPPED ITEMS")]
+        [Description("adrenaline on very fine has a 33% chance to make 1853 - UPGRADES DROPPED ITEMS")]
         public bool OldColaRecipes914Dropped { get; set; } = true;
 
         /// <summary>
         /// If pre 13.5 recipes to get cola should still work in 914 - UPGRADES ITEM ONLY IN HAND
         /// </summary>
-        [Description("If pre 13.5 recipes to get cola should still work in 914 - UPGRADES ITEM ONLY IN HAND")]
+        [Description("adrenaline on very fine has a 33% chance to make 1853 - UPGRADES ITEM ONLY IN HAND")]
         public bool OldColaRecipes914Hand { get; set; } = true;
     }
 }
