@@ -6,4 +6,8 @@ i fixed some of the terrible changes northwood made in the 13.5 update
 
 all of these are configurable to be enabled or disabled
 
+updated values:
+![image](https://github.com/Half-0001/NewUpdateFixes/assets/108597230/f5eda295-91b1-460c-a419-d48f8e6286ce)
+
+
 any issues - Half__ on discord 
