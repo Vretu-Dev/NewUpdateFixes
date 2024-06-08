@@ -27,10 +27,5 @@ namespace NewUpdateFixes
         [Description("If SCP500 cures the traumatised affect given by 106. - suggested by follow the owl")]
         public bool Scp500CuresTrauma { get; set; } = false;
 
-        [Description("adrenaline on very fine has a 33% chance to make 1853 - UPGRADES DROPPED ITEMS")]
-        public bool OldColaRecipes914Dropped { get; set; } = false;
-
-        [Description("adrenaline on very fine has a 33% chance to make 1853 - UPGRADES ITEM ONLY IN HAND")]
-        public bool OldColaRecipes914Hand { get; set; } = false;
     }
 }

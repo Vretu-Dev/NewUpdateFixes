@@ -46,16 +46,14 @@ namespace NewUpdateFixes
             GenHandler = new(Config);
 
             Exiled.Events.Handlers.Player.UsingItem += GenHandler.OnUsingItem;
-            Exiled.Events.Handlers.Scp914.UpgradingInventoryItem += GenHandler.OnUpgradingInventoryItem;
-            Exiled.Events.Handlers.Scp914.UpgradingPickup += GenHandler.OnUpgradingPickup;
+
             Exiled.Events.Handlers.Player.Hurting += GenHandler.OnHurting;
             
         }
         protected void UnsubscribeEvents()
         {
             Exiled.Events.Handlers.Player.UsingItem -= GenHandler.OnUsingItem;
-            Exiled.Events.Handlers.Scp914.UpgradingInventoryItem -= GenHandler.OnUpgradingInventoryItem;
-            Exiled.Events.Handlers.Scp914.UpgradingPickup -= GenHandler.OnUpgradingPickup;
+
             Exiled.Events.Handlers.Player.Hurting -= GenHandler.OnHurting;
 
             GenHandler = null;
@@ -93,34 +91,6 @@ namespace NewUpdateFixes
         {
             config = instance;
         }
-        internal void UpgradeItemFloor(ItemType input, ItemType result, Scp914.Scp914KnobSetting knobSetting, int chance, UpgradingPickupEventArgs ev)
-        {
-            if (ev.KnobSetting == knobSetting && ev.Pickup.Type == input)
-            {
-                var random = UnityEngine.Random.Range(1, chance);
-                if (random == 1)
-                {
-                    Exiled.API.Features.Pickups.Pickup.CreateAndSpawn(result, ev.OutputPosition, ev.Pickup.Rotation);
-                }
-
-                ev.Pickup.Destroy();
-            }
-
-        }
-
-        internal void UpgradeItemHand(ItemType input, ItemType result, Scp914.Scp914KnobSetting knobSetting, int chance, UpgradingInventoryItemEventArgs ev)
-        {
-            if (ev.KnobSetting == knobSetting && ev.Item.Type == input)
-            {
-                ev.Player.CurrentItem.Destroy();
-                var random = UnityEngine.Random.Range(1, chance);
-                if (random == 1)
-                {
-                    ev.Player.Inventory.ServerAddItem(result);
-                }
-            }
-
-        }
 
         internal void OnHurting(HurtingEventArgs ev)
         {
@@ -154,24 +124,7 @@ namespace NewUpdateFixes
             
         }
 
-        internal void OnUpgradingPickup(UpgradingPickupEventArgs ev)
-        {
-            if (config.OldColaRecipes914Dropped)
-            {
-                UpgradeItemFloor(ItemType.Adrenaline, ItemType.SCP1853, Scp914.Scp914KnobSetting.VeryFine, 3, ev);
-
-            }
-        }
-
-        internal void OnUpgradingInventoryItem(UpgradingInventoryItemEventArgs ev)
-        {
-            if (config.OldColaRecipes914Hand)
-            {
-                
-                UpgradeItemHand(ItemType.Adrenaline, ItemType.SCP1853, Scp914.Scp914KnobSetting.VeryFine, 3, ev);
-
-            }
-        }
+        
 
         internal void OnUsingItem(UsingItemEventArgs ev)
         {
