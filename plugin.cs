@@ -4,30 +4,26 @@ using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Scp914;
 using InventorySystem;
 using System;
+using System.Collections.Generic;
 
 namespace NewUpdateFixes
 {
     public class ColaFix : Plugin<Config>
     {
-        /// <inheritdoc>
         internal GenHandler GenHandler { get; private set; }
 
-        /// <inheritdoc>
         public override string Name => "NewUpdateFixes";
 
-        /// <inheritdoc>
         public override string Prefix => "NUF";
 
-        /// <inheritdoc>
         public override string Author => "Half";
 
-        /// <inheritdoc>
-        public override Version Version => new Version(1, 0, 1);
+        public override Version Version => new Version(1, 1, 0);
 
-        /// <inheritdoc>
         public override Version RequiredExiledVersion => new Version(8, 9, 2);
 
-        /// <inheritdoc>
+        
+
         public override void OnEnabled()
         {
 
@@ -36,7 +32,6 @@ namespace NewUpdateFixes
             SubscribeEvents();
         }
 
-        /// <inheritdoc>
         public override void OnDisabled()
         {
 
@@ -45,7 +40,6 @@ namespace NewUpdateFixes
             base.OnDisabled();
         }
 
-        /// <inheritdoc>
         protected void SubscribeEvents()
         {
 
@@ -54,17 +48,15 @@ namespace NewUpdateFixes
             Exiled.Events.Handlers.Player.UsingItem += GenHandler.OnUsingItem;
             Exiled.Events.Handlers.Scp914.UpgradingInventoryItem += GenHandler.OnUpgradingInventoryItem;
             Exiled.Events.Handlers.Scp914.UpgradingPickup += GenHandler.OnUpgradingPickup;
-
-
-
+            Exiled.Events.Handlers.Player.Hurting += GenHandler.OnHurting;
+            
         }
-
-        /// <inheritdoc>
         protected void UnsubscribeEvents()
         {
             Exiled.Events.Handlers.Player.UsingItem -= GenHandler.OnUsingItem;
             Exiled.Events.Handlers.Scp914.UpgradingInventoryItem -= GenHandler.OnUpgradingInventoryItem;
             Exiled.Events.Handlers.Scp914.UpgradingPickup -= GenHandler.OnUpgradingPickup;
+            Exiled.Events.Handlers.Player.Hurting -= GenHandler.OnHurting;
 
             GenHandler = null;
         }
@@ -74,25 +66,33 @@ namespace NewUpdateFixes
     internal class GenHandler
     {
         private Config config;
+
+        private Dictionary<float, float> colaDamage1 = new()
+        {
+            { 0.15f, 0.1f },
+            { 0.225f, 0.15f},
+            { 0.9f, 0.4f},
+            { 1.5f, 1f},
+        };
+        private Dictionary<float, float> colaDamage2 = new()
+        {
+            { 0.25f, 0.15f},
+            { 0.375f, 0.23f},
+            { 1.5f, 0.6f},
+            { 2.5f, 1.5f},
+        };
+        private Dictionary<float, float> colaDamage3 = new()
+        {
+            { 0.4f, 0.25f },
+            { 0.6f, 0.38f} ,
+            { 2.4f, 1f},
+            { 4f, 2.5f}
+        };
+
         internal GenHandler(Config instance)
         {
             config = instance;
         }
-
-        //internal void UpgradeItemInventory(ItemType input, ItemType result, Scp914.Scp914KnobSetting knobSetting, int chance, UpgradingInventoryItemEventArgs ev )
-        //{
-        //    if (ev.KnobSetting == knobSetting && ev.Item.Type == input)
-        //    {
-        //        ev.Player.RemoveItem(ev.Item);
-        //        var random = UnityEngine.Random.Range(1, chance);
-        //        if (random == 1)
-        //        {
-        //            ev.Player.Inventory.ServerAddItem(result);
-        //        }
-        //    }
-
-        //}
-
         internal void UpgradeItemFloor(ItemType input, ItemType result, Scp914.Scp914KnobSetting knobSetting, int chance, UpgradingPickupEventArgs ev)
         {
             if (ev.KnobSetting == knobSetting && ev.Pickup.Type == input)
@@ -122,57 +122,66 @@ namespace NewUpdateFixes
 
         }
 
+        internal void OnHurting(HurtingEventArgs ev)
+        {
+            if (config.OldColaHealthDrain)
+            {
+                if (ev.DamageHandler.Type == DamageType.Scp207)
+                {
+                    byte intensity = ev.Player.GetEffect(EffectType.Scp207).Intensity;
+                    
+
+                    if (intensity == 1)
+                    {
+                        float newDamage;
+                        colaDamage1.TryGetValue(ev.Amount, out newDamage);
+                        ev.Amount = newDamage;
+                    }
+                    if (intensity == 2)
+                    {
+                        float newDamage;
+                        colaDamage2.TryGetValue(ev.Amount, out newDamage);
+                        ev.Amount = newDamage;
+                    }
+                    if (intensity == 3)
+                    {
+                        float newDamage;
+                        colaDamage3.TryGetValue(ev.Amount, out newDamage);
+                        ev.Amount = newDamage;
+                    }
+                }
+            }
+            
+        }
 
         internal void OnUpgradingPickup(UpgradingPickupEventArgs ev)
         {
             if (config.OldColaRecipes914Dropped)
             {
-
-                //UpgradeItemFloor(ItemType.GrenadeFlash, ItemType.SCP207, Scp914.Scp914KnobSetting.VeryFine, 4, ev);
-
                 UpgradeItemFloor(ItemType.Adrenaline, ItemType.SCP1853, Scp914.Scp914KnobSetting.VeryFine, 3, ev);
 
-                //UpgradeItemFloor(ItemType.SCP1853, ItemType.SCP207, Scp914.Scp914KnobSetting.Fine, 1, ev);
-
             }
-
         }
 
         internal void OnUpgradingInventoryItem(UpgradingInventoryItemEventArgs ev)
         {
-            //if (config.OldColaRecipes914Inv)
-            //{
-            //    UpgradeItemInventory(ItemType.Coin, ItemType.SCP207, Scp914.Scp914KnobSetting.Fine, 1, ev);
-
-            //    //UpgradeItemInventory(ItemType.GrenadeFlash, ItemType.SCP207, Scp914.Scp914KnobSetting.VeryFine, 4, ev);
-
-            //    //UpgradeItemInventory(ItemType.Adrenaline, ItemType.SCP1853, Scp914.Scp914KnobSetting.VeryFine, 3, ev);
-
-            //    //UpgradeItemInventory(ItemType.SCP1853, ItemType.SCP207, Scp914.Scp914KnobSetting.Fine, 1, ev);
-
-            //}
-
             if (config.OldColaRecipes914Hand)
             {
-                //UpgradeItemHand(ItemType.GrenadeFlash, ItemType.SCP207, Scp914.Scp914KnobSetting.VeryFine, 4, ev);
-
+                
                 UpgradeItemHand(ItemType.Adrenaline, ItemType.SCP1853, Scp914.Scp914KnobSetting.VeryFine, 3, ev);
 
-                //UpgradeItemHand(ItemType.SCP1853, ItemType.SCP207, Scp914.Scp914KnobSetting.Fine, 1, ev);
-
-
             }
-            
-
         }
 
         internal void OnUsingItem(UsingItemEventArgs ev)
         {
             
-            byte intensity = ev.Player.GetEffect(EffectType.Scp207).Intensity;
+            
 
             if (config.OldColaSpeed)
             {
+                byte intensity = ev.Player.GetEffect(EffectType.Scp207).Intensity;
+
                 if (ev.Item.Type == ItemType.SCP207)
                 {
                     
@@ -198,7 +207,6 @@ namespace NewUpdateFixes
 
             if (ev.Item.Type == ItemType.SCP500)
             {
-
                 if (config.Scp500CuresTrauma)
                 {
                     ev.Player.DisableEffect(EffectType.Traumatized);
