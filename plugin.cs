@@ -141,17 +141,17 @@ namespace NewUpdateFixes
                     if (intensity == 0)
                     {
 
-                        ev.Player.EnableEffect(EffectType.MovementBoost, 9);
+                        ev.Player.EnableEffect(EffectType.MovementBoost, 4);
                     }
                     else if (intensity == 1)
                     {
                         ev.Player.DisableEffect(EffectType.MovementBoost);
-                        ev.Player.EnableEffect(EffectType.MovementBoost, 15);
+                        ev.Player.EnableEffect(EffectType.MovementBoost, 6);
                     }
                     else if (intensity == 2)
                     {
                         ev.Player.DisableEffect(EffectType.MovementBoost);
-                        ev.Player.EnableEffect(EffectType.MovementBoost, 7);
+                        ev.Player.EnableEffect(EffectType.MovementBoost, 3);
                     }
 
                 }
