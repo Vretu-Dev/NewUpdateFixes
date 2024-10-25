@@ -16,7 +16,7 @@ namespace NewUpdateFixes
         public bool OldColaHealthDrain { get; set; } = true;
         [Description("If SCP500 cures the traumatised affect given by 106. - suggested by follow the owl")]
         public bool Scp500CuresTrauma { get; set; } = false;
-        [Description("Jailbird Custom Settings:")]
+        [Description("Jailbird Custom Settings.")]
         public bool EnableCustomJailbirdSettings { get; set; } = false;
         public EffectType JailbirdEffect { get; set; } = EffectType.Flashed;
         public float JailbirdEffectDuration { get; set; } = 4f;
