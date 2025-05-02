@@ -1,10 +1,8 @@
-﻿using Exiled.API.Enums;
-using Exiled.API.Interfaces;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace NewUpdateFixes
 {
-    public class Config : IConfig
+    public class Config
     {
         [Description("Whether or not this plugin is enabled.")]
         public bool IsEnabled { get; set; } = true;
@@ -16,10 +14,5 @@ namespace NewUpdateFixes
         public bool OldColaHealthDrain { get; set; } = true;
         [Description("If SCP-500 cures the traumatised effect caused by SCP-106 - suggested by follow The Owl.")]
         public bool Scp500CuresTrauma { get; set; } = false;
-        [Description("Jailbird Custom Settings.")]
-        public bool EnableCustomJailbirdSettings { get; set; } = false;
-        public EffectType JailbirdEffect { get; set; } = EffectType.Flashed;
-        public float JailbirdEffectDuration { get; set; } = 4f;
-        public byte JailbirdEffectIntensity { get; set; } = 1;
     }
 }

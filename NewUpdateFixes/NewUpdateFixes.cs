@@ -1,29 +1,26 @@
 ﻿using System;
-using Exiled.API.Features;
+using LabApi.Features;
+using LabApi.Loader.Features.Plugins;
 
 namespace NewUpdateFixes
 {
     public class NewUpdateFixes : Plugin<Config>
     {
         public override string Name => "NewUpdateFixes";
-        public override string Author => "Half";
-        public override string Prefix { get; } = "NUF";
-        public override Version Version => new Version(1, 4, 0);
-        public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
+        public override string Description => "Display extra hint like a timers and notifications.";
+        public override string Author => "Vretu";
+        public override Version Version => new Version(1, 0, 0);
+        public override Version RequiredApiVersion { get; } = new Version(LabApiProperties.CompiledVersion);
         public static NewUpdateFixes Instance { get; private set; }
-        public override void OnEnabled()
+        public override void Enable()
         {
             Instance = this;
             EventHandlers.ColaHandler.RegisterEvents();
-            if(Config.EnableCustomJailbirdSettings) { EventHandlers.JailbirdHandler.RegisterEvents(); }
-            base.OnEnabled();
         }
-        public override void OnDisabled()
+        public override void Disable()
         {
             Instance = null;
             EventHandlers.ColaHandler.UnregisterEvents();
-            if(Config.EnableCustomJailbirdSettings) { EventHandlers.JailbirdHandler.UnregisterEvents(); }
-            base.OnDisabled();
         }
     }
 }
